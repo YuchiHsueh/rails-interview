@@ -18,26 +18,31 @@ class Api::ItemsController < ApplicationController
     @item = @todo_list.items.build(item_params)
 
     if @item.save
-      render json: @item, status: :ok
+      render json: {
+        msg: "Item created successfully",
+        item: @item
+      }, status: :created
     else
       error_handler(@item.errors)
     end
   end
 
   def update
-    @item = Item.find(params[:id])
-
     if @item.update(item_params)
-      render json: @item, status: :ok
+      render json: {
+        msg: "Item updated successfully",
+        item: @item
+      }, status: :ok
     else
       error_handler(@item.errors)
     end
   end
 
   def destroy
-    @item = Item.find(params[:id])
     @item.destroy
-    head :ok
+    render json: {
+      msg: "Item deleted successfully"
+    }, status: :ok
   end
 
   private
@@ -47,7 +52,7 @@ class Api::ItemsController < ApplicationController
   end
 
   def set_item
-    @item = Item.find(params[:id])
+    @item = @todo_list.items.find(params[:id])
   end
 
   def item_params
