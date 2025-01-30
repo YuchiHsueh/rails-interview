@@ -13,6 +13,44 @@
  *= require_tree .
  *= require_self
  */
+
+html, body {
+  background-color: #83b5d1 !important;
+  min-height: 100vh;
+}
+
+/* Card header styles */
+.card-header {
+  border-bottom: none !important;
+  padding: 1.5rem !important;
+}
+
+.card-header h1 {
+  color: white !important;
+  font-weight: bold !important;
+  font-size: 2.5rem !important;
+  margin: 0 !important;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Index page card header - blue monochromatic gradient */
+.card:has(h1:not([class*="edit"]):not([data-todo-title])) .card-header {
+  background-image: linear-gradient(45deg, #4a90e2, #357abd) !important;
+  background-color: transparent !important;
+}
+
+/* Show page card header - teal monochromatic gradient */
+.card:has(h1[data-todo-title]) .card-header {
+  background-image: linear-gradient(45deg, #40b9b0, #2d8c85) !important;
+  background-color: transparent !important;
+}
+
+/* Edit page card header - purple monochromatic gradient */
+.card:has(h1[class*="text-3xl"]) .card-header {
+  background-image: linear-gradient(45deg, #8e44ad, #6c3483) !important;
+  background-color: transparent !important;
+}
+
 .delete-btn {
   position: relative;
   min-width: 2.5rem;
