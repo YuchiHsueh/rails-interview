@@ -13,4 +13,116 @@
  *= require_tree .
  *= require_self
  */
-@import "bootstrap";
+.delete-btn {
+  position: relative;
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.delete-btn i {
+  transition: opacity 0.3s ease;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.trash-icon {
+  opacity: 1;
+}
+
+.x-icon {
+  opacity: 0;
+}
+
+.delete-btn:hover .trash-icon {
+  opacity: 0;
+}
+
+.delete-btn:hover .x-icon {
+  opacity: 1;
+}
+
+.edit-btn {
+  position: relative;
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.edit-btn i {
+  transition: opacity 0.3s ease;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.pen-square-icon {
+  opacity: 1;
+}
+
+.pen-icon {
+  opacity: 0;
+}
+
+.edit-btn:hover .pen-square-icon {
+  opacity: 0;
+}
+
+.edit-btn:hover .pen-icon {
+  opacity: 1;
+}
+
+.submit-btn {
+  position: relative;
+  min-width: 200px;  /* Adjust based on your text length */
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.submit-btn .button-text {
+  transition: opacity 0.3s ease;
+  opacity: 1;
+}
+
+.submit-btn .plus-submit-icon {
+  transition: opacity 0.3s ease;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+}
+
+.submit-btn:hover .button-text {
+  opacity: 0;
+}
+
+.submit-btn:hover .plus-submit-icon {
+  opacity: 1;
+}
+
+@keyframes spin-counter {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+.fa-arrow-rotate-left {
+  transition: transform 0.3s ease;
+}
+
+.fa-arrow-rotate-left:hover {
+  animation: spin-counter 2s linear infinite;
+}

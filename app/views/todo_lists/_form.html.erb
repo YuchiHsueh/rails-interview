@@ -18,6 +18,11 @@
                        controller: "reset-form",
                        action: "keyup->reset-form#clearOnEscape"
                      } %>
-    <%= f.submit class: "btn btn-primary" %>
+    <%= button_tag(type: 'submit', class: "btn btn-primary submit-btn") do %>
+      <span class="button-text">
+        <%= todo_list.persisted? ? "Update Todo List" : "Create a new Todo List" %>
+      </span>
+      <i class="fa-solid <%= todo_list.persisted? ? "fa-wrench" : "fa-square-plus" %> plus-submit-icon"></i>
+    <% end %>
   </div>
 <% end %>

@@ -6,6 +6,6 @@ Rails.application.routes.draw do
   end
 
   resources :todo_lists, path: :todolists do
-    resources :items, only: %i[ create destroy ], path: :todos
+    resources :items, only: %i[ create destroy update ], path: :todos
   end
 end

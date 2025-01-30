@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
   before_action :set_todo_list
-  before_action :set_item, only: %i[ destroy ]
+  before_action :set_item, only: %i[update destroy]
 
   def create
     @item = @todo_list.items.build(item_params)
@@ -21,6 +21,30 @@ class ItemsController < ApplicationController
             partial: "items/form",
             locals: { todo_list: @todo_list, item: @item })
         end
+      end
+    end
+  end
+
+  def update
+    respond_to do |format|
+      if @item.update(item_params)
+        format.html { redirect_to @todo_list, notice: 'Item was successfully updated.' }
+        format.turbo_stream {
+          render turbo_stream: turbo_stream.replace(
+            @item,
+            partial: "items/item",
+            locals: { todo_list: @todo_list, item: @item }
+          )
+        }
+      else
+        format.html { redirect_to @todo_list, alert: 'Error updating item.' }
+        format.turbo_stream {
+          render turbo_stream: turbo_stream.replace(
+            @item,
+            partial: "items/item",
+            locals: { todo_list: @todo_list, item: @item }
+          )
+        }
       end
     end
   end

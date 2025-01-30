@@ -22,9 +22,10 @@
       <div>
         <%= button_to todo_list_item_path(todo_list, item),
                     method: :delete,
-                    class: "btn btn-sm btn-danger",
-                    form: { class: 'd-inline' } do %>
-          <i class="fa-solid fa-trash"></i>
+            class: "btn btn-sm btn-danger delete-btn",
+            form: { class: 'd-inline' } do %>
+          <i class="fa-solid fa-trash trash-icon"></i>
+          <i class="fa-solid fa-xmark x-icon"></i>
         <% end %>
       </div>
     </div>

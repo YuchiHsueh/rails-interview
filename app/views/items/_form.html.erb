@@ -9,6 +9,11 @@
     <%= f.text_field :description,
                      class: "form-control",
                      placeholder: "Enter new item description..." %>
-    <%= f.submit "+ Add new Item", class: "btn btn-primary" %>
+    <%= button_tag(type: 'submit', class: "btn btn-primary submit-btn") do %>
+      <span class="button-text">
+      + Add new Item
+      </span>
+      <i class="fa-solid fa-square-plus plus-submit-icon"></i>
+    <% end %>
   </div>
 <% end %>
