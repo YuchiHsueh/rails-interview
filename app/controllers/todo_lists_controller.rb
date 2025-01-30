@@ -1,8 +1,9 @@
 class TodoListsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_todo_list, only: %i[ show edit update destroy ]
 
   def index
-    @todo_lists = TodoList.page(params[:page]).per(10)
+    @todo_lists = current_user.todo_lists.page(params[:page]).per(10)
   end
 
   def show
@@ -12,31 +13,26 @@ class TodoListsController < ApplicationController
   end
 
   def create
-    @todo_list = TodoList.new(todo_list_params)
+    @todo_list = current_user.todo_lists.build(todo_list_params)
 
     respond_to do |format|
       if @todo_list.save
-        format.html { redirect_to @todo_list, notice: "Todo list created successfully" }
-        format.turbo_stream do
-          render turbo_stream: [
-            turbo_stream.append("todo_lists", partial: "todo_list", locals: { todo_list: @todo_list }),
-            turbo_stream.update("new_todo_list", partial: "form", locals: { todo_list: TodoList.new })
-          ]
-        end
+        format.turbo_stream
+        format.html { redirect_to todo_lists_path, notice: 'Todo list was successfully created.' }
       else
-        format.html { render :new, status: :unprocessable_entity }
         format.turbo_stream do
-          render turbo_stream.update("new_todo_list",
-            partial: "form",
+          render turbo_stream: turbo_stream.update('new_todo_list',
+            partial: 'form',
             locals: { todo_list: @todo_list })
         end
+        format.html { render :new, status: :unprocessable_entity }
       end
     end
   end
 
   def update
     if @todo_list.update(todo_list_params)
-      redirect_to @todo_list, notice: "Todo list updated successfully"
+      redirect_to todo_lists_path, notice: 'Todo list was successfully updated.'
     else
       render :edit, status: :unprocessable_entity
     end
@@ -46,17 +42,15 @@ class TodoListsController < ApplicationController
     @todo_list.destroy
 
     respond_to do |format|
-      format.html { redirect_to todo_lists_url, notice: "Todo list deleted successfully" }
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.remove(@todo_list)
-      end
+      format.turbo_stream { render turbo_stream: turbo_stream.remove(@todo_list) }
+      format.html { redirect_to todo_lists_url, notice: 'Todo list was successfully destroyed.' }
     end
   end
 
   private
 
   def set_todo_list
-    @todo_list = TodoList.find(params[:id])
+    @todo_list = current_user.todo_lists.find(params[:id])
   end
 
   def todo_list_params

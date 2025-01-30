@@ -1,0 +1,7 @@
+<%= turbo_stream.append "todo_lists" do %>
+  <%= render @todo_list %>
+<% end %>
+
+<%= turbo_stream.update "new_todo_list" do %>
+  <%= render "form", todo_list: TodoList.new %>
+<% end %>

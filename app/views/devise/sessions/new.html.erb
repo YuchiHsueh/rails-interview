@@ -1,0 +1,40 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+      <div class="card shadow">
+        <div class="card-header" style="background-image: linear-gradient(45deg, #4a90e2, #357abd)">
+          <h2 class="text-center mb-0 text-white">Sign in</h2>
+        </div>
+
+        <div class="card-body p-4">
+          <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "mb-4" }) do |f| %>
+            <div class="mb-3">
+              <%= f.label :email, class: "form-label" %>
+              <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
+            </div>
+
+            <div class="mb-3">
+              <%= f.label :password, class: "form-label" %>
+              <%= f.password_field :password, autocomplete: "current-password", class: "form-control" %>
+            </div>
+
+            <% if devise_mapping.rememberable? %>
+              <div class="mb-3 form-check">
+                <%= f.check_box :remember_me, class: "form-check-input" %>
+                <%= f.label :remember_me, class: "form-check-label" %>
+              </div>
+            <% end %>
+
+            <div class="d-grid gap-2">
+              <%= f.submit "Sign in", class: "btn btn-primary", style: "background-image: linear-gradient(45deg, #4a90e2, #357abd); border: none;" %>
+            </div>
+          <% end %>
+
+          <div class="text-center">
+            <%= render "devise/shared/links" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
