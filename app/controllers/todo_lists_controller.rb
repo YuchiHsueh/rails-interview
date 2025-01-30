@@ -1,4 +1,5 @@
 class TodoListsController < ApplicationController
+  rescue_from ActiveRecord::RecordNotFound, with: :todo_list_not_found
   before_action :authenticate_user!
   before_action :set_todo_list, only: %i[ show edit update destroy ]
 
@@ -43,7 +44,7 @@ class TodoListsController < ApplicationController
 
     respond_to do |format|
       format.turbo_stream { render turbo_stream: turbo_stream.remove(@todo_list) }
-      format.html { redirect_to todo_lists_url, notice: 'Todo list was successfully destroyed.' }
+      format.html { redirect_to todo_lists_url, notice: 'Todo list was successfully deleted.' }
     end
   end
 
@@ -55,5 +56,9 @@ class TodoListsController < ApplicationController
 
   def todo_list_params
     params.require(:todo_list).permit(:name)
+  end
+
+  def todo_list_not_found
+    redirect_to root_path, alert: 'The todo list you requested could not be found.'
   end
 end

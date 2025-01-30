@@ -1,4 +1,6 @@
 class ItemsController < ApplicationController
+  rescue_from ActiveRecord::RecordNotFound, with: :item_not_found
+  before_action :authenticate_user!
   before_action :set_todo_list
   before_action :set_item, only: %i[update destroy]
 
@@ -15,7 +17,7 @@ class ItemsController < ApplicationController
           ]
         end
       else
-        format.html { redirect_to @todo_list, alert: 'Error creating item.' }
+        format.html { redirect_to @todo_list, alert: 'Unable to create item. Please check the form.' }
         format.turbo_stream do
           render turbo_stream.update("new_item",
             partial: "items/form",
@@ -37,7 +39,7 @@ class ItemsController < ApplicationController
           )
         }
       else
-        format.html { redirect_to @todo_list, alert: 'Error updating item.' }
+        format.html { redirect_to @todo_list, alert: 'Unable to update item. Please check the form.' }
         format.turbo_stream {
           render turbo_stream: turbo_stream.replace(
             @item,
@@ -61,6 +63,8 @@ class ItemsController < ApplicationController
 
   def set_todo_list
     @todo_list = TodoList.find(params[:todo_list_id])
+  rescue ActiveRecord::RecordNotFound
+    redirect_to root_path, alert: 'The todo list you requested could not be found.'
   end
 
   def set_item
@@ -69,5 +73,9 @@ class ItemsController < ApplicationController
 
   def item_params
     params.require(:item).permit(:title, :description, :completed)
+  end
+
+  def item_not_found
+    redirect_to root_path, alert: 'The item you requested could not be found.'
   end
 end

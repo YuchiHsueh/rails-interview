@@ -55,6 +55,8 @@ class Api::ItemsController < ApplicationController
 
   def set_todo_list
     @todo_list = TodoList.find(params[:todo_list_id])
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: "Todo list not found" }, status: :not_found
   end
 
   def set_item

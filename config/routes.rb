@@ -7,8 +7,8 @@ Rails.application.routes.draw do
   end
 
   namespace :api do
-    resources :todo_lists, path: :todolists, only: [] do
-      resources :items, path: :todos, only: [:update]
+    resources :todo_lists, path: :todolists, except: [:new, :edit] do
+      resources :items, path: :todos, except: [:new, :edit]
     end
   end
 end
