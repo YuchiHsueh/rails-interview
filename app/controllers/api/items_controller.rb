@@ -1,8 +1,8 @@
 class Api::ItemsController < ApplicationController
   skip_before_action :verify_authenticity_token
   rescue_from ActiveRecord::RecordNotFound, with: :item_not_found
-  before_action :set_todo_list, only: [:index, :create]
-  before_action :set_item, only: [:update, :destroy]
+  before_action :set_todo_list
+  before_action :set_item, only: %i[ show update destroy ]
 
   def index
     @items = @todo_list.items.page(params[:page]).per(params[:per_page] || 10)
@@ -11,6 +11,12 @@ class Api::ItemsController < ApplicationController
       total_pages: @items.total_pages,
       current_page: @items.current_page,
       total_count: @items.total_count
+    }, status: :ok
+  end
+
+  def show
+    render json: {
+      item: @item
     }, status: :ok
   end
 

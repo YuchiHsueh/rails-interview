@@ -1,0 +1,25 @@
+<%= turbo_frame_tag dom_id(todo_list) do %>
+  <div class="list-group-item">
+    <div class="d-flex justify-content-between align-items-center">
+      <h5 class="mb-1">
+        <%= link_to todo_list.name,
+            todo_list_path(todo_list),
+            class: "text-decoration-none",
+            data: { turbo_frame: "_top" } %>
+      </h5>
+      <div>
+        <%= link_to edit_todo_list_path(todo_list),
+            class: "btn btn-sm btn-warning me-2",
+            data: { turbo_frame: "_top" } do %>
+          <i class="fa-regular fa-pen-to-square"></i>
+        <% end %>
+        <%= button_to todo_list_path(todo_list),
+            method: :delete,
+            class: "btn btn-sm btn-danger",
+            form: { class: 'd-inline', data: { turbo_confirm: 'Are you sure?' } } do %>
+          <i class="fa-solid fa-trash"></i>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

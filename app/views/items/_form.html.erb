@@ -1,0 +1,14 @@
+<%= form_with(model: [todo_list, item], class: "mb-3") do |f| %>
+  <div class="mb-3">
+    <%= f.text_field :title,
+                     class: "form-control",
+                     placeholder: "Enter new item title...",
+                     required: true %>
+  </div>
+  <div class="input-group">
+    <%= f.text_field :description,
+                     class: "form-control",
+                     placeholder: "Enter new item description..." %>
+    <%= f.submit "+ Add new Item", class: "btn btn-primary" %>
+  </div>
+<% end %>

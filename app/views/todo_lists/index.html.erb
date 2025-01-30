@@ -1,9 +1,24 @@
-<%= link_to 'Add Todo List', new_todo_list_path %>
-
-<div>
-  <% @todo_lists.each do |todo_list| %>
-    <div>
-      #<%= todo_list.id %> | <%= todo_list.name %>
+<div class="container mt-5">
+  <div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h1>Todo Lists</h1>
     </div>
-  <% end %>
+    <div class="card-body">
+      <%= turbo_frame_tag "new_todo_list" do %>
+        <%= render "form", todo_list: TodoList.new %>
+      <% end %>
+
+    <div class="list-group mt-4">
+      <%= turbo_frame_tag "todo_lists" do %>
+        <% @todo_lists.each do |todo_list| %>
+          <%= render "todo_list", todo_list: todo_list %>
+        <% end %>
+      <% end %>
+    </div>
+
+      <div class="mt-4">
+        <%= paginate @todo_lists %>
+      </div>
+    </div>
+  </div>
 </div>

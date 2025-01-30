@@ -1,0 +1,32 @@
+<%= turbo_frame_tag dom_id(item) do %>
+  <div class="list-group-item list-group-item-action">
+    <div class="d-flex justify-content-between align-items-center">
+      <div class="form-check">
+        <%= form_with(model: [todo_list, item], class: "d-inline") do |f| %>
+          <%= f.check_box :completed,
+                         class: "form-check-input",
+                         data: { turbo_frame: dom_id(item) },
+                         onchange: "this.form.requestSubmit()" %>
+          <div>
+            <strong class="<%= item.completed? ? 'text-decoration-line-through' : '' %>">
+              <%= item.title %>
+            </strong>
+            <% if item.description.present? %>
+              <p class="mb-0 text-muted <%= item.completed? ? 'text-decoration-line-through' : '' %>">
+                <%= item.description %>
+              </p>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+      <div>
+        <%= button_to todo_list_item_path(todo_list, item),
+                    method: :delete,
+                    class: "btn btn-sm btn-danger",
+                    form: { class: 'd-inline' } do %>
+          <i class="fa-solid fa-trash"></i>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

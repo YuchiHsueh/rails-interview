@@ -1,0 +1,5 @@
+<div class="list-group" id="items_list">
+  <% todo_list.items.order(created_at: :desc).each do |item| %>
+    <%= render "items/item", todo_list: todo_list, item: item %>
+  <% end %>
+</div>

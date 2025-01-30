@@ -1,7 +1,7 @@
   class Api::TodoListsController < ApplicationController
     skip_before_action :verify_authenticity_token
     rescue_from ActiveRecord::RecordNotFound, with: :todo_list_not_found
-    before_action :set_todo_list, only: [:show, :update, :destroy]
+    before_action :set_todo_list, only: %i[ show update destroy ]
 
     def index
       @todo_lists = TodoList.page(params[:page]).per(params[:per_page] || 10)
